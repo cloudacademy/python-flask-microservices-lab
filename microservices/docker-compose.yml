@@ -1,20 +1,8 @@
-# docker-compose.deploy.yml
-version: '3.8'
-
-volumes:
-  userdb_vol:
-  productdb_vol:
-  orderdb_vol:
-
-networks:
-  micro_network:
-    name: micro_network
-
 services:
   user-api:
     container_name: cuser-service
     build:
-      context: ../user-service
+      context: ./user-service
     ports:
     - "5001:5001"
     depends_on:
@@ -41,7 +29,7 @@ services:
   product-api:
     container_name: cproduct-service
     build:
-      context: ../product-service
+      context: ./product-service
     ports:
     - "5002:5002"
     depends_on:
@@ -68,7 +56,7 @@ services:
   order-api:
     container_name: corder-service
     build:
-      context: ../order-service
+      context: ./order-service
     ports:
     - "5003:5003"
     depends_on:
@@ -95,9 +83,18 @@ services:
   frontend-app:
     container_name: cfrontend-app
     build:
-      context: .
+      context: ./frontend
     ports:
     - "5000:5000"
     networks:
       - micro_network
     restart: always
+
+volumes:
+  userdb_vol:
+  productdb_vol:
+  orderdb_vol:
+
+networks:
+  micro_network:
+    name: micro_network
